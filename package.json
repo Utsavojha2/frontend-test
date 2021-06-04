@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
     "lint:js": "eslint \"**/*.{js,jsx}\" --ignore-path .gitignore --fix",
     "lint:style": "stylelint **/*.scss .gitignore --fix"
   },
