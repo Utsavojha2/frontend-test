@@ -11,13 +11,11 @@ import { addToFavorites, removeFromFavorites } from '../reducers/favoriteSlice';
 
 const MovieCard = ({
     el: {
-          id, title, overview,
+        id, title, overview,
         backdrop_path, poster_path,
-    }, layeredFavList, getDirectorInfo,
-        setCurrentID,
+    }, layeredFavList, setCurrentID,
 }) => {
-    const movieSpecifics = useSpecifics(id);
-    const { genre, director } = movieSpecifics;
+    const data = useSpecifics(id);
     const [accordionOpen, setAccordionOpen] = useState(false);
     const [taskMessage, setTaskMessage] = useState({
         type: '',
@@ -68,7 +66,7 @@ const MovieCard = ({
     };
 
     const onDirectorClick = (dirId) => {
-        getDirectorInfo(dirId);
+        // getDirectorInfo(dirId);
         setCurrentID(dirId);
     };
 
@@ -78,16 +76,16 @@ const MovieCard = ({
                 <img src={`${imgPath}${backdrop_path || poster_path}`} alt={title} />
                 <div>
                     <h3>{title}</h3>
-                    {genre && (
+                    {data?.genre && (
                         <p>
                             <p>Genre:</p>
-                            <span>{genre?.join('-')}</span>
+                            <span>{data?.genre?.join('-')}</span>
                         </p>
                     )}
-                    {director && (
+                    {data?.director && (
                     <p>
                         <p>Director:</p>
-                       <span onClick={() => onDirectorClick(director.id)} role="presentation">{director.name}</span>
+                       <span onClick={() => onDirectorClick(data?.director.id)} role="presentation">{data?.director.name}</span>
                     </p>
                     )}
                 </div>

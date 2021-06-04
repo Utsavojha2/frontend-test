@@ -8,7 +8,7 @@ import MovieList from '../components/MovieList';
 const SearchedMovies = ({ setDropdownOpen, dropdownOpen, onDropdownToggle }) => {
     const { asPath } = useRouter();
     const searchTerm = asPath?.split('=')[1]?.split('-').join(' ');
-    const { movieResults } = useResults();
+    const { movieResults, loading } = useResults();
 
     return (
         <div onClick={onDropdownToggle} role="presentation">
@@ -23,7 +23,7 @@ const SearchedMovies = ({ setDropdownOpen, dropdownOpen, onDropdownToggle }) => 
             dropdownOpen={dropdownOpen}
             />
             <NavItems />
-            <MovieList results={movieResults} />
+            <MovieList results={movieResults} loading={loading} />
         </div>
     );
 };

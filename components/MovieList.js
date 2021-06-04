@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import useSWR from 'swr';
 import { favoriteList } from '../reducers/favoriteSlice';
 import MovieCard from './MovieCard';
 import { fetchDirectorInfo } from '../features/fetchMovies';
@@ -10,22 +11,16 @@ import DirectorModal from './DirectorModal';
 const MovieList = ({ results, loading }) => {
     const layeredFavList = useSelector(favoriteList);
     const [currentID, setCurrentID] = useState(null);
-    const [directorInfo, setDirectorInfo] = useState({
-        loading: false,
-        info: null,
-    });
 
     const getDirectorInfo = async (personId) => {
-        try {
-            setDirectorInfo({ ...directorInfo, loading: true });
-            const data = await fetch(`${fetchDirectorInfo(personId)}`);
-            const respData = await data.json();
-            console.log(respData);
-            setDirectorInfo({ loading: false, info: respData });
-        } catch (e) {
-            alert(e.message);
-        }
+        const data = await fetch(`${fetchDirectorInfo(personId)}`);
+        const respData = await data.json();
+        return respData;
     };
+
+    const { data, error } = useSWR(() => (
+        currentID ? `${currentID}` : null
+        ), getDirectorInfo);
 
     if (!loading && (!results || results?.length < 1)) {
         return (
@@ -40,7 +35,7 @@ const MovieList = ({ results, loading }) => {
 
     return (
         <Container>
-            {currentID && <DirectorModal setCurrentID={setCurrentID} {...directorInfo} />}
+            {currentID && <DirectorModal setCurrentID={setCurrentID} info={data} loading={!data && !error} />}
             {loading && <section></section>}
             {!loading && results && results.map(
                 (el) => (
@@ -48,7 +43,6 @@ const MovieList = ({ results, loading }) => {
                     key={el.id}
                     el={el}
                     layeredFavList={layeredFavList}
-                    getDirectorInfo={getDirectorInfo}
                     setCurrentID={setCurrentID}
                 />
                 ),
