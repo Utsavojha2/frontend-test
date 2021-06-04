@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { fetchMovieGenre, fetchMovieMakers } from '../features/fetchMovies';
 
 const useSpecifics = (movieId) => {
-    const baseURL = 'http://api.themoviedb.org/3';
+    const baseURL = 'https://api.themoviedb.org/3';
 
     const fetchInfo = async (id) => {
         const genreData = await fetch(`${baseURL}${fetchMovieGenre(id)}`);
