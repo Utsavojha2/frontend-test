@@ -65,14 +65,9 @@ const MovieCard = ({
         setTaskMessage({ type: 'success', msg: 'Removed' });
     };
 
-    const onDirectorClick = (dirId) => {
-        // getDirectorInfo(dirId);
-        setCurrentID(dirId);
-    };
-
     return (
         <Card>
-            <CardHeader accordionOpen={accordionOpen}>
+            <CardHeader accordionOpen={accordionOpen} onClick={() => setAccordionOpen(!accordionOpen)}>
                 <img src={`${imgPath}${backdrop_path || poster_path}`} alt={title} />
                 <div>
                     <h3>{title}</h3>
@@ -85,11 +80,11 @@ const MovieCard = ({
                     {data?.director && (
                     <p>
                         <p>Director:</p>
-                       <span onClick={() => onDirectorClick(data?.director.id)} role="presentation">{data?.director.name}</span>
+                       <span onClick={() => setCurrentID(data?.director.id)} role="presentation">{data?.director.name}</span>
                     </p>
                     )}
                 </div>
-                <IconButton onClick={() => setAccordionOpen(!accordionOpen)}>
+                <IconButton>
                     {!accordionOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
                 </IconButton>
             </CardHeader>
@@ -257,6 +252,7 @@ const CardHeader = styled.div`
     position: relative;
 
     &:hover{
+        cursor: pointer;
         border: none;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.38), 0 6px 20px 0 rgba(0, 0, 0, 0.28);
     }

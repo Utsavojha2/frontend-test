@@ -7,13 +7,14 @@ const DirectorModal = ({ loading, info, setCurrentID }) => {
     const imgPath = 'https://image.tmdb.org/t/p/w1280';
 
     const onModalToggle = (e) => {
-        if (e.target.classList.contains('kemqWv')) {
+        const ifClickedOver = e.target.getAttribute('data-obj') === 'overlay';
+        if (ifClickedOver) {
             setCurrentID(null);
         }
     };
 
     return (
-        <Container onClick={onModalToggle}>
+        <Container onClick={onModalToggle} data-obj="overlay">
             <ModalBox>
                 <Close onClick={() => setCurrentID(null)} />
                 {loading ? <CircularProgress /> : (

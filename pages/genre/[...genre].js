@@ -27,10 +27,9 @@ const MovieGenre = ({
 };
 
 export async function getServerSideProps(context) {
-    const baseURL = 'https://api.themoviedb.org/3';
     const { query: { genre } } = context;
 
-    const data = await fetch(`${baseURL}${fetchMovies.fetchMoviesByGenre(genre[1])}`);
+    const data = await fetch(`${fetchMovies.fetchMoviesByGenre(genre[1])}`);
     const respData = await data.text();
 
     return {

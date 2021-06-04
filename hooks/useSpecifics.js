@@ -2,11 +2,9 @@ import useSWR from 'swr';
 import { fetchMovieGenre, fetchMovieMakers } from '../features/fetchMovies';
 
 const useSpecifics = (movieId) => {
-    const baseURL = 'https://api.themoviedb.org/3';
-
     const fetchInfo = async (id) => {
-        const genreData = await fetch(`${baseURL}${fetchMovieGenre(id)}`);
-        const crewData = await fetch(`${baseURL}${fetchMovieMakers(id)}`);
+        const genreData = await fetch(`${fetchMovieGenre(id)}`);
+        const crewData = await fetch(`${fetchMovieMakers(id)}`);
         const respData = await genreData.json();
         const respCrewData = await crewData.json();
 
@@ -16,7 +14,7 @@ const useSpecifics = (movieId) => {
         };
     };
 
-    const { data } = useSWR(`${movieId}`, fetchInfo);
+    const { data } = useSWR(movieId, fetchInfo);
 
     return data;
 };
