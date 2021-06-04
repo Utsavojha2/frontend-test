@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import fetchMovies from '../features/fetchMovies';
 
 const useResults = () => {
-    const baseURL = 'https://api.themovied.org/3';
+    const baseURL = 'https://api.themoviedb.org/3';
     const { asPath } = useRouter();
     const searchTerm = asPath?.split('=')[1]?.split('-').join(' ');
 
